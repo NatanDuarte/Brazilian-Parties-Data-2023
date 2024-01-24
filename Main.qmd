@@ -27,17 +27,35 @@ file_name <- 'Ano-2023.csv'
 file_path <- file.path(folder_name, file_name)
 
 
-download.file(url, zip_name)
+tryCatch(
+  expr = {
+    # Se não houver exceções, o código dentro deste bloco será executado
+    download.file(url, zip_name, mode = "wb")
+    cat("Download concluído com sucesso!\n")
+  },
+  error = function(e) {
+    # Se ocorrer uma exceção, o código dentro deste bloco será executado
+    cat("Erro durante o download: ", conditionMessage(e), "\n")
+  }
+)
 ```
 
 Depois do unzip, podemos deletar o arquivo compactado
 
 ```{r}
-# validate if the file exists before performing action
 
-if (file.exists(zip_name)) 
-  unzip(zip_name, exdir = folder_name)
-  file.remove(zip_name)
+tryCatch(
+  expr = {
+    # validate if the file exists before performing action
+    
+    unzip(zip_name, exdir = folder_name)
+    file.remove(zip_name)
+    cat("Unzip concluído com sucesso e arquivo deletado!\n")
+  },
+  error = function(e) {
+    cat("Erro durante o unzip: ", conditionMessage(e), "\n")
+  }
+)
 
 ```
 
