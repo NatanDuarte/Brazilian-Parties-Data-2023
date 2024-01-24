@@ -1,0 +1,66 @@
+---
+title: "Brazilian Parties Data 2023"
+author: "Natan Duarte"
+format: html
+editor: visual
+---
+
+## Gastos da Câmara em 2023
+
+```{r}
+R.version.string
+```
+
+## Obtenção dos dados
+
+Primeiro foi realizado o dowload e unzip da base de dados
+
+```{r}
+#| echo: false
+
+url <- 'https://www.camara.leg.br/cotas/Ano-2023.csv.zip'
+
+zip_name <- 'Gastos-Camara-Ano-2023.zip'
+
+folder_name <- 'Gastos-Camara'
+file_name <- 'Ano-2023.csv'
+file_path <- file.path(folder_name, file_name)
+
+
+download.file(url, zip_name)
+```
+
+Depois do unzip, podemos deletar o arquivo compactado
+
+```{r}
+# validate if the file exists before performing action
+
+if (file.exists(zip_name)) 
+  unzip(zip_name, exdir = folder_path)
+  file.remove(zip_name)
+
+```
+
+Agora podemos capturar os dados do arquivo .csv
+
+```{r}
+library(dplyr)
+library(psych)
+
+
+parties_df <- read.csv2(file_path, sep=";")
+
+sample_n(parties_df, 5)
+```
+
+## Limpeza de dados
+
+### 1 - Validando a integridade
+
+Vamos usar alguns métodos para avaliar a integridade.
+
+```{r}
+
+
+
+```

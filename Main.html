@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.547">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Natan Duarte">
+
+<title>Brazilian Parties Data 2023</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Main_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Main_files/libs/quarto-html/quarto.js"></script>
+<script src="Main_files/libs/quarto-html/popper.min.js"></script>
+<script src="Main_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Main_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Main_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Main_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Main_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Main_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Main_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Brazilian Parties Data 2023</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Natan Duarte </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="gastos-da-câmara-em-2023" class="level2">
+<h2 class="anchored" data-anchor-id="gastos-da-câmara-em-2023">Gastos da Câmara em 2023</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(zip_name, <span class="at">exdir =</span> folder_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>parties_df <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(file_path, <span class="at">sep=</span><span class="st">";"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_n</span>(parties_df, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  txNomeParlamentar         cpf ideCadastro nuCarteiraParlamentar nuLegislatura
+1        Átila Lira 74568701368      123086                   109          2023
+2             Zucco 72434325068      220552                   512          2023
+3     Marcos Pollon 71036091104      220547                   439          2023
+4      Tadeu Veneri 18438660991      220682                   463          2023
+5     Aliel Machado  6908052923      178927                   441          2023
+  sgUF    sgPartido codLegislatura numSubCota
+1   PI           PP             57          3
+2   RS REPUBLICANOS             57          3
+3   MS           PL             57         13
+4   PR           PT             57          3
+5   PR           PV             57          3
+                                txtDescricao numEspecificacaoSubCota
+1              COMBUSTÍVEIS E LUBRIFICANTES.                       1
+2              COMBUSTÍVEIS E LUBRIFICANTES.                       1
+3 FORNECIMENTO DE ALIMENTAÇÃO DO PARLAMENTAR                       0
+4              COMBUSTÍVEIS E LUBRIFICANTES.                       1
+5              COMBUSTÍVEIS E LUBRIFICANTES.                       1
+  txtDescricaoEspecificacao
+1      Veículos Automotores
+2      Veículos Automotores
+3                          
+4      Veículos Automotores
+5      Veículos Automotores
+                                             txtFornecedor         txtCNPJCPF
+1 031 - 302 NORTE - CASCOL COMBUSTIVEIS PARA VEICULOS LTDA 003.065.970/0311-2
+2 031 - 302 NORTE - CASCOL COMBUSTIVEIS PARA VEICULOS LTDA 003.065.970/0311-2
+3                               J&amp;F BAR E RESTAURANTE LTDA 165.547.760/0035-5
+4                                   AUTO POSTO JATOBA LTDA 190.176.240/0014-0
+5                                 AUTO POSTO FLORENSE LTDA 034.655.050/0020-9
+  txtNumero indTipoDocumento          datEmissao vlrDocumento vlrGlosa
+1    311647                4 2023-04-06T00:00:00       330.19        0
+2    355782                4 2023-10-23T00:00:00       258.31        0
+3    129878                4 2023-11-08T00:00:00        86.01        0
+4   1137021                4 2023-12-23T00:00:00          150        0
+5  12111201                4 2023-06-19T00:00:00           80        0
+  vlrLiquido numMes numAno numParcela txtPassageiro txtTrecho numLote
+1     330.19      4   2023          0                         1922412
+2     258.31     10   2023          0                         1981042
+3      86.01     11   2023          0                         1985402
+4        150     12   2023          0                         2003817
+5         80      6   2023          0                         1943989
+  numRessarcimento datPagamentoRestituicao vlrRestituicao nuDeputadoId
+1               NA                                                3670
+2               NA                                                3669
+3               NA                                                3539
+4               NA                                                3693
+5               NA                                                2915
+  ideDocumento
+1      7523321
+2      7630978
+3      7639270
+4      7671484
+5      7561905
+                                                                                  urlDocumento
+1 https://www.camara.leg.br/cota-parlamentar/nota-fiscal-eletronica?ideDocumentoFiscal=7523321
+2 https://www.camara.leg.br/cota-parlamentar/nota-fiscal-eletronica?ideDocumentoFiscal=7630978
+3 https://www.camara.leg.br/cota-parlamentar/nota-fiscal-eletronica?ideDocumentoFiscal=7639270
+4 https://www.camara.leg.br/cota-parlamentar/nota-fiscal-eletronica?ideDocumentoFiscal=7671484
+5 https://www.camara.leg.br/cota-parlamentar/nota-fiscal-eletronica?ideDocumentoFiscal=7561905</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(parties_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           vars      n         mean           sd      median
+txNomeParlamentar*            1 224257 3.896700e+02 2.337600e+02         392
+cpf                           2 223373 3.183522e+10 2.919492e+10 22002570159
+ideCadastro                   3 223421 1.800367e+05 4.875491e+04      204412
+nuCarteiraParlamentar         4 223421 2.995900e+02 1.565700e+02         301
+nuLegislatura                 5 224257 2.022760e+03 9.500000e-01        2023
+sgUF*                         6 223421 1.633000e+01 7.310000e+00          18
+sgPartido*                    7 224257 1.395000e+01 6.240000e+00          15
+codLegislatura                8 224257 5.694000e+01 2.400000e-01          57
+numSubCota                    9 224257 2.624300e+02 4.187600e+02          10
+txtDescricao*                10 224257 1.006000e+01 6.150000e+00          11
+numEspecificacaoSubCota      11 224257 3.100000e-01 4.800000e-01           0
+txtDescricaoEspecificacao*   12 224257 2.220000e+00 1.840000e+00           1
+txtFornecedor*               13 224257 1.298192e+04 7.391340e+03       13736
+txtCNPJCPF*                  14 224257 7.049500e+03 6.809400e+03        5747
+txtNumero*                   15 224257 8.252524e+04 4.684422e+04       84929
+indTipoDocumento             16 224257 1.300000e+00 1.740000e+00           0
+datEmissao*                  17 224257 9.367800e+02 2.917200e+02         972
+vlrDocumento*                18 224257 2.733067e+04 1.659620e+04       25580
+vlrGlosa*                    19 224257 7.558000e+01 4.126900e+02           1
+vlrLiquido*                  20 224257 2.712959e+04 1.648397e+04       25398
+numMes                       21 224257 6.730000e+00 3.250000e+00           7
+numAno                       22 224257 2.023000e+03 0.000000e+00        2023
+numParcela                   23 224257 0.000000e+00 2.000000e-02           0
+txtPassageiro*               24 224257 5.101500e+02 1.080830e+03           1
+txtTrecho*                   25 224257 2.048100e+02 4.720000e+02           1
+numLote                      26 224257 1.387599e+06 8.860392e+05     1933866
+numRessarcimento             27  64919 0.000000e+00 0.000000e+00           0
+datPagamentoRestituicao*     28 224257 1.000000e+00 3.300000e-01           1
+vlrRestituicao*              29 224257 1.010000e+00 6.500000e-01           1
+nuDeputadoId                 30 224257 3.013530e+03 7.822900e+02        3325
+ideDocumento                 31 224257 5.439533e+06 3.355437e+06     7543242
+urlDocumento*                32 224257 5.227964e+04 5.101059e+04       41033
+                                trimmed          mad     min         max
+txNomeParlamentar*         3.873900e+02 3.054200e+02       1         800
+cpf                        2.854909e+10 2.714378e+10 1608657 99898659149
+ideCadastro                1.882088e+05 2.411449e+04   62881      227433
+nuCarteiraParlamentar      3.035900e+02 2.075600e+02       1         624
+nuLegislatura              2.023000e+03 0.000000e+00    2019        2023
+sgUF*                      1.667000e+01 8.900000e+00       1          27
+sgPartido*                 1.399000e+01 8.900000e+00       1          24
+codLegislatura             5.700000e+01 0.000000e+00      56          57
+numSubCota                 2.031100e+02 1.038000e+01       1         999
+txtDescricao*              9.770000e+00 8.900000e+00       1          20
+numEspecificacaoSubCota    2.600000e-01 0.000000e+00       0           4
+txtDescricaoEspecificacao* 2.020000e+00 0.000000e+00       1           5
+txtFornecedor*             1.333666e+04 1.132113e+04       1       22770
+txtCNPJCPF*                6.387290e+03 8.519020e+03       1       21448
+txtNumero*                 8.304596e+04 5.852119e+04       1      158375
+indTipoDocumento           1.130000e+00 0.000000e+00       0           4
+datEmissao*                9.729100e+02 2.550100e+02       1        1417
+vlrDocumento*              2.700413e+04 2.185352e+04       1       58189
+vlrGlosa*                  1.000000e+00 0.000000e+00       1        3601
+vlrLiquido*                2.680572e+04 2.173788e+04       1       57686
+numMes                     6.780000e+00 4.450000e+00       1          12
+numAno                     2.023000e+03 0.000000e+00    2023        2023
+numParcela                 0.000000e+00 0.000000e+00       0           1
+txtPassageiro*             2.198800e+02 0.000000e+00       1        4252
+txtTrecho*                 6.997000e+01 0.000000e+00       1        2153
+numLote                    1.484999e+06 5.651968e+04       0     2005586
+numRessarcimento           0.000000e+00 0.000000e+00       0           0
+datPagamentoRestituicao*   1.000000e+00 0.000000e+00       1          37
+vlrRestituicao*            1.000000e+00 0.000000e+00       1          66
+nuDeputadoId               3.147520e+03 4.477500e+02      74        3756
+ideDocumento               5.833175e+06 1.068184e+05       0     7674293
+urlDocumento*              4.761413e+04 6.083404e+04       1      153095
+                                 range  skew kurtosis          se
+txNomeParlamentar*                 799  0.06    -1.23        0.49
+cpf                        99897050492  0.74    -0.73 61772038.33
+ideCadastro                     164552 -1.17     0.10      103.15
+nuCarteiraParlamentar              623 -0.12    -1.16        0.33
+nuLegislatura                        4 -3.73    11.90        0.00
+sgUF*                               26 -0.29    -1.10        0.02
+sgPartido*                          23  0.01    -1.03        0.01
+codLegislatura                       1 -3.73    11.90        0.00
+numSubCota                         998  1.17    -0.59        0.88
+txtDescricao*                       19  0.13    -1.55        0.01
+numEspecificacaoSubCota              4  1.21     1.75        0.00
+txtDescricaoEspecificacao*           4  0.85    -1.27        0.00
+txtFornecedor*                   22769 -0.19    -1.45       15.61
+txtCNPJCPF*                      21447  0.48    -1.12       14.38
+txtNumero*                      158374 -0.09    -1.20       98.92
+indTipoDocumento                     4  0.82    -1.19        0.00
+datEmissao*                       1416 -1.35     2.24        0.62
+vlrDocumento*                    58188  0.16    -1.21       35.05
+vlrGlosa*                         3600  6.02    36.93        0.87
+vlrLiquido*                      57685  0.16    -1.21       34.81
+numMes                              11 -0.09    -1.12        0.01
+numAno                               0   NaN      NaN        0.00
+numParcela                           1 58.71  3445.08        0.00
+txtPassageiro*                    4251  2.05     2.87        2.28
+txtTrecho*                        2152  2.60     5.87        1.00
+numLote                        2005586 -0.93    -1.14     1871.03
+numRessarcimento                     0   NaN      NaN        0.00
+datPagamentoRestituicao*            36 76.60  6389.04        0.00
+vlrRestituicao*                     65 75.48  6087.34        0.00
+nuDeputadoId                      3682 -1.40     1.13        1.65
+ideDocumento                   7674293 -0.93    -1.12     7085.59
+urlDocumento*                   153094  0.46    -1.23      107.72</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
