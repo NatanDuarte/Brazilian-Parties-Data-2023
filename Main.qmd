@@ -36,7 +36,7 @@ Depois do unzip, podemos deletar o arquivo compactado
 # validate if the file exists before performing action
 
 if (file.exists(zip_name)) 
-  unzip(zip_name, exdir = folder_path)
+  unzip(zip_name, exdir = folder_name)
   file.remove(zip_name)
 
 ```
