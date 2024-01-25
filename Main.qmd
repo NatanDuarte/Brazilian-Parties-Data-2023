@@ -11,21 +11,26 @@ editor: visual
 R.version.string
 ```
 
+------------------------------------------------------------------------
+
 ## Obtenção dos dados
 
 Primeiro foi realizado o dowload e unzip da base de dados
 
 ```{r}
-#| echo: false
 
 url <- 'https://www.camara.leg.br/cotas/Ano-2023.csv.zip'
 
 zip_name <- 'Gastos-Camara-Ano-2023.zip'
-
 folder_name <- 'Gastos-Camara'
 file_name <- 'Ano-2023.csv'
-file_path <- file.path(folder_name, file_name)
+```
 
+```{r}
+library(here)
+
+
+file_path <- here::here(folder_name, file_name)
 
 tryCatch(
   expr = {
@@ -38,6 +43,7 @@ tryCatch(
     cat("Erro durante o download: ", conditionMessage(e), "\n")
   }
 )
+
 ```
 
 Depois do unzip, podemos deletar o arquivo compactado
@@ -62,14 +68,15 @@ tryCatch(
 Agora podemos capturar os dados do arquivo .csv
 
 ```{r}
-library(dplyr)
+library(readr)
 library(psych)
 
-
-parties_df <- read.csv2(file_path, sep=";")
+parties_df <- readr::read_delim(file_path)
 
 sample_n(parties_df, 5)
 ```
+
+------------------------------------------------------------------------
 
 ## Limpeza de dados
 
